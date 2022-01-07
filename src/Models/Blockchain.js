@@ -1,5 +1,5 @@
-import Block from './Block';
-import validate from '../modules/validate';
+import { Block, MemoryPool } from '.';
+import { validate } from '../modules';
 
 class Blockchain {
 	constructor() {

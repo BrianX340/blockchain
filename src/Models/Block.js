@@ -1,5 +1,4 @@
-import hashGenerator from '../modules/hash';
-import adjustDifficulty from '../modules/adjustDifficulty';
+import { adjustDifficulty, hashGenerator } from '../modules';
 
 const DIFFICULTY = 3;
 

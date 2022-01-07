@@ -1,5 +1,4 @@
-import Blockchain from "../../../src/Models/Blockchain";
-import Block from "../../../src/Models/Block";
+import { Blockchain, Block } from "../../../src/Models";
 
 describe('Blockchain', () => {
   let blockchain;

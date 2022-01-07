@@ -1,5 +1,6 @@
 {
   "name": "blockchain",
+  "author": "BrianX340",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",

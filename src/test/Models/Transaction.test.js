@@ -1,5 +1,4 @@
-import Transaction from "../../Models/Transaction";
-import Wallet from "../../Models/Wallet";
+import { Transaction, Wallet } from "../../Models";
 
 describe('Transaction test', () => {
 	let wallet;

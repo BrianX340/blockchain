@@ -1,4 +1,4 @@
-import Block from '../Models/Block';
+import { Block } from '../Models';
 
 export default (blockchain)=>{
 	const [ genesisBlock, ...blocks ] = blockchain;

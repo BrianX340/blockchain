@@ -1,5 +1,5 @@
 import Elliptic from 'elliptic';
-import hashGenerator from '../modules/hash';
+import hashGenerator from './hash';
 const ec = new Elliptic.ec('secp256k1');
 
 export default {
