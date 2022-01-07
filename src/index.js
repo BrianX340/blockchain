@@ -1,12 +1,13 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { Blockchain } from './Models';
+import { Blockchain, Wallet } from './Models';
 import P2PService from './p2p';
 
 const { HTTP_PORT = 3000 } = process.env;
 
 const app = express();
 const blockchain = new Blockchain();
+const wallet = new Wallet(blockchain);
 const p2pService = new P2PService(blockchain);
 
 app.use(bodyParser.json());
@@ -31,6 +32,22 @@ app.post('/mine',(req,res)=>{
 app.get('/transactions',(req,res)=>{
 	const { memoryPool: { transactions } } = blockchain;
 	res.json(transactions);
+})
+
+app.post('/transaction',(req,res)=>{
+	const { body: { recipient, amount } } = req;
+	try {
+		const transaction = wallet.createTransaction(recipient, amount);
+		res.json({
+			transaction,
+			message: 'Transaction created successfully'
+		});
+	}
+	catch (err) {
+		res.status(400).json({
+			error: err.message
+		});
+	}
 })
 
 

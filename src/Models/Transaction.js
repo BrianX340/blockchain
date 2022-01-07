@@ -15,7 +15,7 @@ class Transaction {
 			throw new Error('Amount exceeds balance');
 		}
 
-		const transaction = new this();
+		const transaction = new Transaction();
 		transaction.outputs.push(...[
 			{ amount: balance - amount, address: publicKey },
 			{ amount, address: recipientAddress }

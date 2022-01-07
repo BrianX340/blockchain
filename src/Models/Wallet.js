@@ -33,6 +33,7 @@ class Wallet {
 			tx.update(this, recipientAddress, amount);
 		} else {
 			tx = Transaction.create(this, recipientAddress, amount);
+			console.log(JSON.stringify(tx));
 			memoryPool.addOrUpdateTransaction(tx);
 		}
 		return tx;
