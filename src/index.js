@@ -1,6 +1,6 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import Blockchain from './blockchain/Blockchain';
+import { Blockchain } from './Models';
 import P2PService from './p2p';
 
 const { HTTP_PORT = 3000 } = process.env;
@@ -26,6 +26,11 @@ app.post('/mine',(req,res)=>{
 		blocks: blockchain.blocks.length,
 		block
 	});
+})
+
+app.get('/transactions',(req,res)=>{
+	const { memoryPool: { transactions } } = blockchain;
+	res.json(transactions);
 })
 
 
