@@ -36,6 +36,17 @@ describe('Transaction test', () => {
 			}).toThrow('Amount exceeds balance');
 		});
 	})
-	
 
+	it('Inputs the balance of the wallet', () => {
+		expect(transaction.input.amount).toEqual(wallet.balance);
+	});
+
+	it('Inputs the sender address of the wallet', () => {
+		expect(transaction.input.address).toEqual(wallet.publicKey);
+	});
+
+	it('Inputs has a signature usign tge wallet', () => {
+		expect(typeof transaction.input.signature).toEqual('object');
+		expect(transaction.input.signature).toEqual(wallet.sign(transaction.outputs));
+	});
 })

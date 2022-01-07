@@ -14,6 +14,10 @@ describe('Wallet',()=>{
 		expect(wallet.publicKey.length).toEqual(130);
 	});
 
-	
+	it('Use sign()',()=>{
+		const signature = wallet.sign('data');
+		expect(typeof signature).toEqual('object');
+		expect(signature).toEqual(wallet.sign('data'));
+	})
 
 })

@@ -1,4 +1,5 @@
 import Elliptic from 'elliptic';
+import hashGenerator from '../modules/hash';
 
 const ec = new Elliptic.ec('secp256k1');
 const INITIAL_BALANCE = 100;
@@ -17,6 +18,9 @@ class Wallet {
 		}`;
 	}
 
+	sign(dataHash) {
+		return this.keyPair.sign(hashGenerator(dataHash));
+	}
 	
 
 }
