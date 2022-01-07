@@ -1,4 +1,5 @@
-import { Transaction, Wallet } from "../../Models";
+import { Transaction, Wallet, blockchainWallet } from "../../Models";
+import { REWARD } from "../../Models/Transaction";
 
 describe('Transaction test', () => {
 	let wallet;
@@ -78,4 +79,23 @@ describe('Transaction test', () => {
 			expect(output.amount).toEqual(nextAmount);
 		  });
 	});
+
+	describe('Creating a reward transaction',()=>{
+		let blockchainWallet;
+
+		beforeEach(()=>{
+			blockchainWallet = new Wallet(undefined, 1000);
+			transaction = Transaction.reward(wallet, blockchainWallet);
+		});
+
+		it('Reward the miner wallet',()=>{
+			expect(transaction.outputs.length).toEqual(2);
+
+			let output = transaction.outputs.find(({ address }) => address === wallet.publicKey);
+			expect(output.amount).toEqual(REWARD);
+
+			output = transaction.outputs.find(({ address }) => address === blockchainWallet.publicKey);
+			expect(output.amount).toEqual(blockchainWallet.balance - REWARD);
+		});
+	})
 })

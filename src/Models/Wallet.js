@@ -1,11 +1,11 @@
 import { elliptic, hashGenerator } from "../modules";
 import { Transaction } from ".";
 
-const INITIAL_BALANCE = 100;
+const INITIAL_BALANCE = 100; //el dinero con el que comienza la wallet
 
 class Wallet {
-	constructor(blockchain) {
-		this.balance = INITIAL_BALANCE;
+	constructor(blockchain, initialBalance = INITIAL_BALANCE) {
+		this.balance = initialBalance;
 		this.keyPair = elliptic.createKeyPair();
 		this.publicKey = this.keyPair.getPublic().encode('hex');
 		this.blockchain = blockchain;

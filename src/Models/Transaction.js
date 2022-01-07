@@ -1,6 +1,7 @@
 import uuidV1 from 'uuid/v1';
 import { elliptic } from '../modules';
 
+const REWARD = 1; //lo que recibe el minero al generar un nuevo bloque
 class Transaction {
 	constructor() {
 		this.id = uuidV1();
@@ -10,7 +11,6 @@ class Transaction {
 
 	static create(senderWallet, recipientAddress, amount) {
 		const { balance, publicKey } = senderWallet;
-
 		if (amount > balance) {
 			throw new Error('Amount exceeds balance');
 		}
@@ -39,6 +39,10 @@ class Transaction {
 		}
 	}
 
+	static reward(minerWallet, blockchainWallet) {
+		return this.create(blockchainWallet, minerWallet.publicKey, REWARD);
+	}
+
 	update(senderWallet, recipientAddress, amount) {
 		const senderOutput = this.outputs.find(output => output.address === senderWallet.publicKey);
 		if (senderOutput.amount < amount) {
@@ -50,5 +54,7 @@ class Transaction {
 		return this;
 	}
 }
+
+export { REWARD };
 
 export default Transaction;
