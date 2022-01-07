@@ -45,8 +45,38 @@ describe('Transaction test', () => {
 		expect(transaction.input.address).toEqual(wallet.publicKey);
 	});
 
-	it('Inputs has a signature usign tge wallet', () => {
+	it('Inputs has a signature usign the wallet', () => {
 		expect(typeof transaction.input.signature).toEqual('object');
 		expect(transaction.input.signature).toEqual(wallet.sign(transaction.outputs));
+	});
+
+	it('Validate a valid transaction',()=>{
+		expect(Transaction.verify(transaction)).toBe(true);
+	});
+
+	it('Invalidate a corrupt transaction',()=>{
+		transaction.outputs[0].amount = 50000;
+		expect(Transaction.verify(transaction)).toBe(false);
+	});
+
+	describe('Updating a transaction', () => {
+		let nextAmount;
+		let nextRecipient;
+
+		beforeEach(() => {
+			nextAmount = 20;
+			nextRecipient = 'next recipient';
+			transaction = transaction.update(wallet, nextRecipient, nextAmount);
+		});
+
+		it('Substracts the next amount from the senders wallet',()=>{
+			const output = transaction.outputs.find(({ address }) => address === wallet.publicKey);
+			expect(output.amount).toEqual(wallet.balance - amount - nextAmount);
+		});
+
+		it('outputs an amount for the next recipient', () => {
+			const output = transaction.outputs.find(({ address }) => address === nextRecipient);
+			expect(output.amount).toEqual(nextAmount);
+		  });
 	});
 })
