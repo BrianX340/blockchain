@@ -1,5 +1,5 @@
-import Block, { DIFFICULTY } from "../../../src/Models/Block";
-
+import { DIFFICULTY } from "../../../src/Models/Block";
+import { Block } from "../../../src/Models";
 
 describe('Block', () => {
 	let timestamp;

@@ -4,6 +4,7 @@ import { validate } from '../modules';
 class Blockchain {
 	constructor() {
 	  this.blocks = [Block.genesis];
+	  this.memoryPool = new MemoryPool();
 	}
   
 	addBlock(data) {

@@ -1,4 +1,3 @@
-
 class MemoryPool {
 	constructor() {
 		this.transactions = [];
@@ -11,6 +10,10 @@ class MemoryPool {
 		} else {
 			this.transactions.push(transaction);
 		}
+	}
+
+	find(addres){
+		return this.transactions.find(({ input }) => input.address === addres);
 	}
 }
 
