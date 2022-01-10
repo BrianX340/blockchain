@@ -5,7 +5,6 @@ import Wallet from './Wallet';
 import MemoryPool from './MemoryPool';
 import Miner from './Miner';
 
-
 export {
 	Block,
 	Blockchain,

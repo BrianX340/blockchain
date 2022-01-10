@@ -1,5 +1,6 @@
-import { Transaction, Wallet, blockchainWallet } from "../../Models";
+import { Transaction, Wallet } from "../../Models";
 import { REWARD } from "../../Models/Transaction";
+import { blockchainWallet } from "../../Models/BlockchainWallet";
 
 describe('Transaction test', () => {
 	let wallet;
@@ -81,10 +82,8 @@ describe('Transaction test', () => {
 	});
 
 	describe('Creating a reward transaction',()=>{
-		let blockchainWallet;
 
 		beforeEach(()=>{
-			blockchainWallet = new Wallet(undefined, 1000);
 			transaction = Transaction.reward(wallet, blockchainWallet);
 		});
 

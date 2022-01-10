@@ -1,3 +1,5 @@
+import { Transaction } from '.';
+import { blockchainWallet } from ".";
 class Miner {
 	constructor(blockchain, p2pService, wallet) {
 		this.blockchain = blockchain;
@@ -7,14 +9,20 @@ class Miner {
 
 	mine() {
 		const {
-			blockchain: { memoryPool }
+			blockchain: { memoryPool },
+			p2pService,
+			wallet
 	 	} = this;
 
-		// 1. Include reward for the miner
-		// 2. Create a block consisting of the transactions in the memory pool
-		// 3. Sync new blockchain with the network
-		// 4. Wipe transaction from memory pool
-		// 5. Broadcast wipe message to every node
+		if (memoryPool.transactions.length === 0) {
+			throw new Error('Memory pool is empty');
+		}
+
+		memoryPool.transactions.push(Transaction.reward(wallet, blockchainWallet));
+		const block = this.blockchain.addBlock(memoryPool.transactions);
+		p2pService.sync();
+
+		return block;
 	}
 }
 
