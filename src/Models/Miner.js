@@ -1,5 +1,6 @@
 import { Transaction } from '.';
-import { blockchainWallet } from ".";
+import { blockchainWallet } from "./BlockchainWallet";
+import { MESSAGE } from '../p2p'
 class Miner {
 	constructor(blockchain, p2pService, wallet) {
 		this.blockchain = blockchain;
@@ -17,10 +18,11 @@ class Miner {
 		if (memoryPool.transactions.length === 0) {
 			throw new Error('Memory pool is empty');
 		}
-
-		memoryPool.transactions.push(Transaction.reward(wallet, blockchainWallet));
+		memoryPool.transactions.push(Transaction.reward(this.wallet, blockchainWallet));
 		const block = this.blockchain.addBlock(memoryPool.transactions);
 		p2pService.sync();
+		memoryPool.wipe();
+		p2pService.broadcast(MESSAGE.WIPE);
 
 		return block;
 	}

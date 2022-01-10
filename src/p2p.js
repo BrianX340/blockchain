@@ -3,7 +3,8 @@ const { P2P_PORT = 5000, PEERS } = process.env;
 const peers = PEERS ? PEERS.split(',') : [];
 const MESSAGE = { 
 	BLOCKS:'blocks',
-	TX: 'transactions'
+	TX: 'transactions',
+	WIPE: 'wipe_memory_pool',
  };
 
 class P2PService {
@@ -36,6 +37,8 @@ class P2PService {
 					blockchain.replace(value)
 				} else if (type===MESSAGE.TX) {
 					blockchain.memoryPool.addOrUpdateTransaction(value);
+				} else if (type===MESSAGE.WIPE) {
+					blockchain.memoryPool.wipe();
 				}
 			}
 			catch (error) {
