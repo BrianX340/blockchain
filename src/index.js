@@ -19,18 +19,6 @@ app.get('/blocks', (req, res) => {
 	res.json(blockchain.blocks);
 })
 
-app.post('/mine',(req,res)=>{
-	const { body: { data } } = req;
-	const block = blockchain.addBlock(data);
-
-	p2pService.sync();
-
-	res.json({
-		blocks: blockchain.blocks.length,
-		block
-	});
-})
-
 app.get('/transactions',(req,res)=>{
 	const { memoryPool: { transactions } } = blockchain;
 	res.json(transactions);
@@ -38,19 +26,14 @@ app.get('/transactions',(req,res)=>{
 
 app.post('/transaction',(req,res)=>{
 	const { body: { recipient, amount } } = req;
-	try {
-		const transaction = wallet.createTransaction(recipient, amount);
+	console.log(req.body)
+	const transaction = wallet.createTransaction(recipient, amount);
 		p2pService.broadcast(MESSAGE.TX, transaction);
 		res.json({
 			transaction,
 			message: 'Transaction created successfully'
 		});
-	}
-	catch (err) {
-		res.status(400).json({
-			error: err.message
-		});
-	}
+	
 })
 
 app.get('/mine/transactions',(req,res)=>{
@@ -60,10 +43,14 @@ app.get('/mine/transactions',(req,res)=>{
 	}
 	catch (err) {
 		res.status(400).json({
-			code:'asd',
 			error: err.message
 		});
 	}
+})
+
+app.post('/wallet',(req,res)=>{
+	const { publicKey } = new Wallet();
+	res.json({ publicKey });
 })
 
 
